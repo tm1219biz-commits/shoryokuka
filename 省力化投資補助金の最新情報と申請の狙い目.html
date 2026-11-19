@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="briefing">
+  <title>省力化投資補助金（カタログ注文型）最新解説＆シミュレーション</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces: warm stone-white paper (Briefing) */
+      --background: #faf9f5;
+      --surface-container-low: #ffffff;
+      --surface-container: #f1efe8;
+      --surface-container-high: #e6e2d6;
+
+      /* Ink */
+      --on-surface: #17181a;
+      --on-surface-variant: #56585c;
+
+      /* Rules */
+      --outline: #17181a;
+      --outline-variant: #dedad0;
+
+      /* Accents */
+      --primary: #17181a;
+      --on-primary: #faf9f5;
+      --primary-container: #f2b705;
+      --on-primary-container: #17181a;
+      --secondary: #1f4e5f;
+      --secondary-tint: #eaf1f4;
+      --tertiary: #785008;
+      --tertiary-tint: #f5e6c4;
+      --error: #b42318;
+      --error-tint: #fbeae8;
+      --on-error: #ffffff;
+
+      /* Data series */
+      --data-1: #1f4e5f;
+      --data-2: #d99000;
+      --data-3: #2b6e52;
+      --data-4: #b84a39;
+      --data-context: #c4bfb2;
+
+      /* Semantic */
+      --positive: #2b6e52;
+      --positive-tint: #e8f3ee;
+      --warning: #8a5600;
+      --warning-tint: #fdf3dc;
+      --focus: #1f4e5f;
+
+      /* Fonts (Japanese + Briefing families) */
+      --font-headline: 'Noto Serif JP', 'Source Serif 4', serif;
+      --font-body: 'Noto Sans JP', 'Plus Jakarta Sans', sans-serif;
+      --font-label: 'Geist Mono', 'Noto Sans JP', monospace;
+
+      /* Type scale (Narrative) */
+      --display-size: clamp(2rem, 1.35rem + 2.4vw, 3.15rem);
+      --headline-size: clamp(1.45rem, 1.15rem + 1.2vw, 2.05rem);
+      --subhead-size: clamp(1.125rem, 1rem + 0.4vw, 1.35rem);
+      --body-size: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+      --label-size: 0.75rem;
+
+      /* Shape */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.375rem;
+      --rounded-full: 0.25rem;
+      --badge-radius: 2px;
+
+      /* Style effects */
+      --section-rule: 1.5px solid var(--outline);
+      --card-border: 1px solid var(--outline-variant);
+      --heading-tracking: -0.02em;
+      --label-tracking: 0.08em;
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { overflow-x: clip; margin: 0; padding: 0; }
+    header { position: static !important; }
+
+    body {
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2xl);
+      padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Focus rings */
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Dossier Section Bar */
+    .dossier-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-bottom: var(--section-rule);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .dossier-bar-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .dossier-pill {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.6875rem;
+      letter-spacing: var(--label-tracking);
+      text-transform: uppercase;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--badge-radius);
+      display: inline-block;
+    }
+    .dossier-meta {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      letter-spacing: 0.04em;
+    }
+
+    /* Typography */
+    h1.title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--display-size);
+      line-height: 1.15;
+      letter-spacing: var(--heading-tracking);
+      margin: 0 0 var(--space-sm);
+      color: var(--on-surface);
+    }
+    h2.section-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--headline-size);
+      line-height: 1.25;
+      letter-spacing: var(--heading-tracking);
+      margin: 0 0 var(--space-xs);
+      color: var(--on-surface);
+    }
+    h3.sub-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--subhead-size);
+      line-height: 1.3;
+      margin: 0 0 var(--space-xs);
+      color: var(--on-surface);
+    }
+    .standfirst {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: clamp(1rem, 0.96rem + 0.35vw, 1.2rem);
+      line-height: 1.5;
+      color: var(--secondary);
+      margin: 0 0 var(--space-md);
+      max-width: 68ch;
+    }
+    .prose {
+      max-width: 65ch;
+      margin: 0 0 var(--space-md);
+      color: var(--on-surface);
+    }
+    .caption {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* Quick TOC Anchor Strip */
+    .toc-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      padding: var(--space-sm) 0;
+      border-top: var(--card-border);
+      border-bottom: var(--card-border);
+      margin-top: var(--space-md);
+    }
+    .toc-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-sm);
+      min-height: 44px;
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .toc-link:hover {
+      background: var(--surface-container);
+      border-color: var(--outline-variant);
+    }
+    .index-num {
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: var(--label-size);
+      color: var(--secondary);
+    }
+
+    /* Cards & Layouts */
+    .figure-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+    .figure-card .value {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-variant-numeric: lining-nums tabular-nums;
+      font-size: clamp(1.75rem, 1.35rem + 1.4vw, 2.5rem);
+      line-height: 1.1;
+      color: var(--on-surface);
+      margin: var(--space-xs) 0;
+    }
+    .figure-card .value-accent {
+      color: var(--secondary);
+    }
+    .aside-box {
+      background: var(--surface-container);
+      border-top: var(--section-rule);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: 0 0 var(--rounded-lg) var(--rounded-lg);
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .split-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+
+    /* Chart containers */
+    .chart-box {
+      position: relative;
+      width: 100%;
+      min-height: 290px;
+      margin-top: var(--space-md);
+    }
+    .chart-box--compact {
+      min-height: 240px;
+    }
+
+    /* Tags & Chips */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--tertiary-tint);
+      color: var(--tertiary);
+    }
+    .chip--positive {
+      background: var(--positive-tint);
+      color: var(--positive);
+    }
+    .chip--error {
+      background: var(--error-tint);
+      color: var(--error);
+    }
+    .chip--secondary {
+      background: var(--secondary-tint);
+      color: var(--secondary);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--primary);
+      background: var(--primary);
+      color: var(--on-primary);
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .btn:hover {
+      background: var(--secondary);
+      border-color: var(--secondary);
+    }
+    .btn:active {
+      transform: translateY(1px);
+    }
+    .btn--secondary {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border: 1px solid var(--outline-variant);
+    }
+    .btn--secondary:hover {
+      background: var(--surface-container);
+      border-color: var(--outline);
+    }
+    .btn--secondary[aria-pressed="true"],
+    .btn--secondary.is-active {
+      background: var(--secondary);
+      color: var(--on-primary);
+      border-color: var(--secondary);
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    /* Inputs & Controls */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+    .field-hint {
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+    }
+    .input-control {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 1rem;
+      font-variant-numeric: tabular-nums;
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .input-control:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 2px var(--secondary-tint);
+      outline: none;
+    }
+    .range-control {
+      width: 100%;
+      min-height: 44px;
+      accent-color: var(--secondary);
+      cursor: pointer;
+    }
+    .input-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 120px;
+      gap: var(--space-md);
+      align-items: end;
+    }
+
+    /* Segmented toggle */
+    .toggle-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+    .toggle-card {
+      text-align: left;
+      padding: var(--space-md);
+      min-height: 44px;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .toggle-card:hover {
+      background: var(--surface-container);
+    }
+    .toggle-card[aria-pressed="true"] {
+      background: var(--secondary-tint);
+      border-color: var(--secondary);
+      box-shadow: inset 0 0 0 1px var(--secondary);
+    }
+    .toggle-card-title {
+      display: block;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-xs);
+    }
+    .toggle-card-desc {
+      display: block;
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+      line-height: 1.45;
+    }
+
+    /* Tables */
+    .data-table-wrap {
+      overflow-x: auto;
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+    }
+    table.briefing-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+    table.briefing-table th {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--section-rule);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      white-space: nowrap;
+    }
+    table.briefing-table td {
+      padding: var(--space-md);
+      border-bottom: var(--card-border);
+      vertical-align: top;
+    }
+    table.briefing-table tr:last-child td {
+      border-bottom: none;
+    }
+    table.briefing-table tr.is-highlighted td {
+      background: var(--secondary-tint);
+    }
+    .num {
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+    }
+
+    /* Simulator Meter */
+    .cap-meter-track {
+      height: 14px;
+      background: var(--surface-container-high);
+      border-radius: var(--rounded);
+      overflow: hidden;
+      margin: var(--space-sm) 0;
+    }
+    .cap-meter-fill {
+      height: 100%;
+      background: var(--secondary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+    .cap-meter-fill--boost {
+      background: var(--data-2);
+    }
+
+    /* Progress Bar (Section 1) */
+    .progress-track {
+      height: 18px;
+      background: var(--surface-container-high);
+      border-radius: var(--rounded);
+      overflow: hidden;
+      display: flex;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--data-2);
+    }
+
+    /* Ranked list */
+    .rank-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .rank-item {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
+      gap: var(--space-sm);
+      align-items: center;
+      padding: var(--space-sm) 0;
+      border-bottom: var(--card-border);
+    }
+    .rank-item:last-child {
+      border-bottom: none;
+    }
+
+    /* Flow Stepper */
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .flow-step-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-xs);
+      padding: var(--space-md);
+      min-height: 44px;
+      border-radius: var(--rounded-lg);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      text-align: left;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .flow-step-btn:hover {
+      background: var(--surface-container);
+    }
+    .flow-step-btn[aria-current="step"] {
+      background: var(--secondary);
+      color: var(--on-primary);
+      border-color: var(--secondary);
+    }
+    .flow-step-btn[aria-current="step"] .index-num {
+      color: var(--primary-container);
+    }
+    .flow-step-label {
+      font-weight: 700;
+      font-size: 0.9375rem;
+      line-height: 1.35;
+    }
+
+    /* Alert / Boundary Box */
+    .boundary-banner {
+      border-left: 4px solid var(--error);
+      background: var(--error-tint);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: 0 var(--rounded-lg) var(--rounded-lg) 0;
+      margin-top: var(--space-md);
+    }
+    .boundary-banner--ok {
+      border-left-color: var(--positive);
+      background: var(--positive-tint);
+    }
+
+    /* Checklist */
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+      cursor: pointer;
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .checklist-item:hover {
+      background: var(--surface-container);
+    }
+    .checklist-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--secondary);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .checklist-item.is-done {
+      background: var(--positive-tint);
+      border-color: var(--positive);
+    }
+    .checklist-item.is-done .checklist-title {
+      text-decoration: line-through;
+      color: var(--on-surface-variant);
+    }
+
+    /* Collapsible detail */
+    details.method-drawer {
+      background: var(--surface-container);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-sm) var(--space-md);
+    }
+    details.method-drawer summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      color: var(--secondary);
+    }
+
+    /* Reveal animation */
+    .reveal-section {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+    }
+
+    /* Status icon helper */
+    .inline-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      vertical-align: text-bottom;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 860px) {
+      .split-grid,
+      .two-col-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .flow-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-md) var(--space-md) var(--space-2xl);
+        gap: var(--space-xl);
+      }
+      .toggle-grid,
+      .flow-steps,
+      .input-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .figure-card {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-grid">
+
+    <!-- HERO / OPENING BRIEFING -->
+    <header>
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">POLICY DOSSIER</span>
+          <span class="dossier-meta">省力化投資補助金（カタログ注文型） // 2026年11月公表データ対応</span>
+        </div>
+        <span class="dossier-meta">更新基準: 11月10日発表・11月13日公表データ</span>
+      </div>
+
+      <h1 class="title">採択率約95%の「穴場」補助金：<br>省力化投資補助金（カタログ注文型）の全貌</h1>
+      <p class="standfirst">従業員0名（個人事業主）から最大500万円・累計最大3,000万円。なぜ当初目標12万件の6%未満しか採択されていないのか、いくら受給でき、12月3日のルール変更で何に注意すべきかを1ページで整理する。</p>
+
+      <p class="prose">
+        従来の事業再構築やものづくり補助金とは異なり、中小企業庁等が推進する「省力化投資補助金（カタログ注文型）」は、事務局のカタログに登録された省力化製品を選んで共同申請する簡易な制度です。締め切りに縛られない随時申請・随時発表方式を採用し、上限額に達するまで複数回申請できる一方、制度構造上のボトルネックから利用が伸び悩み、予算が潤沢に残されています。
+      </p>
+
+      <!-- Headline KPI Row -->
+      <div class="kpi-grid">
+        <article class="figure-card">
+          <div class="dossier-meta">01 / 実質採択率（推計）</div>
+          <div class="value value-accent">約95%</div>
+          <p class="caption">11月13日公表データに基づく審査中案件を除く推計（9割超の高水準）</p>
+        </article>
+        <article class="figure-card">
+          <div class="dossier-meta">02 / 10月末時点の採択実績</div>
+          <div class="value">約6,980件</div>
+          <p class="caption">当初3年計画12万件に対して進捗率は6%未満（年間目標4.2万件）</p>
+        </article>
+        <article class="figure-card">
+          <div class="dossier-meta">03 / 補助上限（3月改定で2倍）</div>
+          <div class="value">500万〜1,500万円</div>
+          <p class="caption">従業員0〜5人でも500万円（大幅賃上げで750万円）／累計最高3,000万円</p>
+        </article>
+        <article class="figure-card">
+          <div class="dossier-meta">04 / ルール変更日（賃上げ枠）</div>
+          <div class="value">12月3日</div>
+          <p class="caption">大幅賃上げ枠のみ「1人あたり給与支給総額+3%」等の判定が厳格化（通常枠は不要）</p>
+        </article>
+      </div>
+
+      <nav class="toc-strip" aria-label="ページ内セクション移動">
+        <button type="button" class="toc-link" onclick="scrollToSection('sec-gap')"><span class="index-num">01</span> なぜ「穴場」なのか</button>
+        <button type="button" class="toc-link" onclick="scrollToSection('sec-trends')"><span class="index-num">02</span> 採択業種と規模</button>
+        <button type="button" class="toc-link" onclick="scrollToSection('sec-sim')"><span class="index-num">03</span> 補助上限シミュレーター</button>
+        <button type="button" class="toc-link" onclick="scrollToSection('sec-dec3')"><span class="index-num">04</span> 12月3日ルール変更</button>
+        <button type="button" class="toc-link" onclick="scrollToSection('sec-flow')"><span class="index-num">05</span> 申請フローと事前着手禁止</button>
+        <button type="button" class="toc-link" onclick="scrollToSection('sec-catalog')"><span class="index-num">06</span> 採択製品例</button>
+      </nav>
+    </header>
+
+    <!-- SECTION 01: WHY IT IS UNDERUTILIZED -->
+    <section id="sec-gap" class="reveal-section">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">01 / BUDGET GAP</span>
+          <span class="dossier-meta">計画と実績の乖離・構造的ボトルネック</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">当初目標12万件に対し実績は約6,980件——進捗6%未満が「出せば通る」を生む</h2>
+      <p class="standfirst">公募計画（2026年9月までに計15回程度・12万件）および令和5年度基金シート目標（単年度4.2万件）に対し、実際の採択数は約0.7万件にとどまる。</p>
+
+      <div class="split-grid">
+        <article class="figure-card">
+          <div class="dossier-meta">FIG 1.1 // 採択目標と10月末実績の比較</div>
+          <h3 class="sub-title">目標120,000件に対する実際の採択規模</h3>
+          <p class="caption">過去実績および審査中案件を除いた分析（丸総研氏データ分析等）による推計採択率は約95%。</p>
+          <div class="chart-box">
+            <canvas id="chart-target-gap" aria-label="当初目標件数と10月末実績の比較チャート"></canvas>
+          </div>
+          <div style="margin-top: var(--space-md);">
+            <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: var(--space-xs);">
+              <span>カタログ全208カテゴリーの登録状況</span>
+              <span class="num">登録製品0件: 42カテゴリー（20.2%）</span>
+            </div>
+            <div class="progress-track" role="img" aria-label="208カテゴリー中42カテゴリーが製品未登録">
+              <div class="progress-fill" style="width: 20.2%;"></div>
+            </div>
+            <p class="caption" style="margin-top: var(--space-xs);">オレンジ部分（42件）はカテゴリー登録のみ完了し、製品がまだ1件も登録されていない空白枠。</p>
+          </div>
+        </article>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+          <div class="aside-box">
+            <div class="dossier-meta">BOTTLENECK A // 供給・制度側の要因</div>
+            <h3 class="sub-title" style="margin-top: var(--space-xs);">カタログ掲載製品の不足と登録遅延</h3>
+            <p class="prose" style="margin-bottom: 0;">
+              工業会などの業界団体による製品カテゴリーの確認・登録フローに時間を要しています。全208件の製品カテゴリーのうち<strong>42カテゴリーで登録製品が0件</strong>となっており、事業者が導入したくても選択肢が存在しない領域が残っています。
+            </p>
+          </div>
+
+          <div class="aside-box">
+            <div class="dossier-meta">BOTTLENECK B // 需要・申請側の要因</div>
+            <h3 class="sub-title" style="margin-top: var(--space-xs);">「登録販売事業者」探しと制度の認知不足</h3>
+            <p class="prose" style="margin-bottom: 0;">
+              本補助金は指定の<strong>登録販売事業者との共同申請が必須</strong>です。製品を見つけても連携できるパートナー企業を見つけにくい点や、従来型補助金と運用が大きく異なるため情報が届いていない点が申請数の伸び悩みにつながっています。
+            </p>
+          </div>
+
+          <div class="figure-card">
+            <div class="dossier-meta">CRITICAL SCOPE // 他補助金との決定的違い</div>
+            <p style="margin: var(--space-xs) 0 0;">
+              <strong>対象外：</strong>新規事業の開発、新規創業、既存事業の新分野展開。<br>
+              <strong>対象：</strong>既存事業においてカタログ登録済みの省力化製品を導入し、<strong>業務の省力化を達成することのみ</strong>が対象です。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 02: ADOPTION TRENDS -->
+    <section id="sec-trends" class="reveal-section">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">02 / ADOPTION TRENDS</span>
+          <span class="dossier-meta">採択事業者の業種・従業員規模・金額分布</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">採択の約半数は「従業員20人以下」かつ「申請額200万円未満」の小規模投資</h2>
+      <p class="standfirst">個人事業主や従業員0〜5人の小規模事業者も全体の17.9%を占めており、建設・製造・専門技術サービスなど現場の人手不足が深刻な業種を中心に活用が広がっている。</p>
+
+      <div class="two-col-grid">
+        <article class="figure-card">
+          <div class="dossier-meta">FIG 2.1 // 採択事業者の規模分布と申請金額</div>
+          <h3 class="sub-title">従業員規模別の採択割合（累計シェア）</h3>
+          <p class="caption">5人以下17.9%、10人以下で約3割、20人以下で全体の約5割を占める。</p>
+          <div class="chart-box chart-box--compact">
+            <canvas id="chart-scale-dist" aria-label="従業員規模別の採択割合チャート"></canvas>
+          </div>
+          <div style="margin-top: var(--space-md); padding-top: var(--space-md); border-top: var(--card-border); display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; justify-content: space-between;">
+            <span style="font-weight: 600;">申請金額「200万円未満」の割合</span>
+            <span class="chip chip--secondary">全体の約5割（約50%）</span>
+          </div>
+        </article>
+
+        <article class="figure-card">
+          <div class="dossier-meta">FIG 2.2 // 採択件数が多い上位5業種</div>
+          <h3 class="sub-title">実際に採択されている主要業種ランキング</h3>
+          <p class="caption">11月13日公表データの採択件数順。</p>
+          <ol class="rank-list" style="margin-top: var(--space-md);">
+            <li class="rank-item">
+              <span class="index-num">01</span>
+              <div>
+                <strong>建設業</strong>
+                <div class="caption">3Dレーザースキャナー、マシンガイダンス機能付きショベル、測量器など</div>
+              </div>
+              <span class="chip">最多</span>
+            </li>
+            <li class="rank-item">
+              <span class="index-num">02</span>
+              <div>
+                <strong>製造業</strong>
+                <div class="caption">マシニングセンター、CNC 3次元測定機、板金加工用取り装置、印刷機など</div>
+              </div>
+              <span class="chip chip--secondary">2位</span>
+            </li>
+            <li class="rank-item">
+              <span class="index-num">03</span>
+              <div>
+                <strong>学術研究・専門技術サービス業</strong>
+                <div class="caption">高精度測量器、地上型3Dレーザースキャナーなど計測・解析省力化</div>
+              </div>
+              <span class="chip chip--secondary">3位</span>
+            </li>
+            <li class="rank-item">
+              <span class="index-num">04</span>
+              <div>
+                <strong>小売業</strong>
+                <div class="caption">オートラベラー、清掃ロボット、券売機など店舗・バックヤード省力化</div>
+              </div>
+              <span class="chip chip--secondary">4位</span>
+            </li>
+            <li class="rank-item">
+              <span class="index-num">05</span>
+              <div>
+                <strong>飲食サービス業</strong>
+                <div class="caption">スチームコンベクションオーブン、券売機、清掃ロボットなど</div>
+              </div>
+              <span class="chip chip--secondary">5位</span>
+            </li>
+          </ol>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 03: INTERACTIVE SUBSIDY CAP SIMULATOR -->
+    <section id="sec-sim" class="reveal-section">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">03 / SIMULATOR</span>
+          <span class="dossier-meta">3月改定（上限2倍）対応 // 従業員数別・補助上限額シミュレーター</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">あなたの事業所の補助上限額・累計上限額をシミュレーション</h2>
+      <p class="standfirst">3月の制度改定により補助上限額は従来の2倍へ拡充。従業員数（0名から申請可能）と大幅賃上げの有無を入力すると、1回あたり上限と複数回申請時の累計上限が即座に算出されます。</p>
+
+      <div class="split-grid">
+        <!-- Simulator Controls -->
+        <div class="figure-card" style="display: flex; flex-direction: column; gap: var(--space-lg);">
+          <div>
+            <div class="dossier-meta" style="margin-bottom: var(--space-sm);">INPUTS // 条件を設定</div>
+            <div class="btn-row" role="group" aria-label="事業規模プリセット">
+              <button type="button" class="btn btn--secondary" onclick="applySimPreset(0, false)">0名（個人事業主）</button>
+              <button type="button" class="btn btn--secondary" onclick="applySimPreset(3, true)">3名＋大幅賃上げ</button>
+              <button type="button" class="btn btn--secondary" onclick="applySimPreset(12, false)">12名（中小企業）</button>
+              <button type="button" class="btn btn--secondary" onclick="applySimPreset(25, false)">25名（中堅規模）</button>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="sim-emp-number" class="field-label">常時使用する従業員数（0名〜申請可能）</label>
+            <div class="input-row">
+              <input type="range" id="sim-emp-slider" class="range-control" min="0" max="50" step="1" value="3" aria-label="従業員数スライダー" oninput="syncEmpFromSlider(this.value)">
+              <input type="number" id="sim-emp-number" class="input-control" min="0" max="999" step="1" value="3" oninput="syncEmpFromNumber(this.value)">
+            </div>
+            <span class="field-hint">区分判定：0〜5人以下 / 6〜20人以下 / 21人以上（50人以上はスライダー右端または数値入力で指定）</span>
+          </div>
+
+          <div class="field-group">
+            <span class="field-label">申請枠の選択</span>
+            <div class="toggle-grid">
+              <button type="button" id="btn-mode-normal" class="toggle-card" aria-pressed="true" onclick="setWageMode(false)">
+                <span class="toggle-card-title">通常枠で申請する</span>
+                <span class="toggle-card-desc">12月3日の賃上げ要件変更の確認は不要。基本の補助上限額を適用。</span>
+              </button>
+              <button type="button" id="btn-mode-wage" class="toggle-card" aria-pressed="false" onclick="setWageMode(true)">
+                <span class="toggle-card-title">大幅な賃上げを伴う申請</span>
+                <span class="toggle-card-desc">0〜5人区分は上限1.5倍（750万円）。12月3日以降の厳格判定が適用。</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="sim-apps-count" class="field-label">想定する申請回数（累計上限まで複数回申請が可能）</label>
+            <select id="sim-apps-count" class="input-control" onchange="setSimAppsCount(this.value)">
+              <option value="1">1回目の申請（初回導入）</option>
+              <option value="2">2回に分けて申請（追加導入）</option>
+              <option value="3">3回に分けて申請（段階的省力化）</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Simulator Output -->
+        <div class="figure-card" style="background: var(--surface-container-low); border-top: 3px solid var(--secondary);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-xs);">
+            <span class="dossier-meta">OUTPUT // 判定結果</span>
+            <span id="sim-tier-badge" class="chip chip--secondary">従業員 0〜5人以下区分</span>
+          </div>
+
+          <div style="margin-top: var(--space-md);">
+            <div class="caption">1回の申請あたりの補助上限額</div>
+            <div id="sim-single-cap" class="value value-accent">最高 500万円</div>
+            <p id="sim-wage-note" class="caption" style="margin-top: var(--space-xs);"></p>
+          </div>
+
+          <div style="margin-top: var(--space-lg); padding-top: var(--space-md); border-top: var(--card-border);">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <span class="caption">1事業者あたりの累計補助上限額</span>
+              <span id="sim-cum-cap" class="num" style="font-size: 1.35rem; font-family: var(--font-headline); color: var(--on-surface);">最高 1,500万円</span>
+            </div>
+            <div class="cap-meter-track">
+              <div id="sim-meter-fill" class="cap-meter-fill" style="width: 33.3%;"></div>
+            </div>
+            <p id="sim-multi-summary" style="font-size: 0.875rem; margin: var(--space-xs) 0 0;"></p>
+          </div>
+
+          <div id="sim-dec3-alert" class="aside-box" style="margin-top: var(--space-lg);">
+            <div class="dossier-meta">COMPLIANCE CHECK</div>
+            <p id="sim-dec3-text" style="font-size: 0.875rem; margin: var(--space-xs) 0 0;"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full Reference Table -->
+      <div class="data-table-wrap" style="margin-top: var(--space-lg);">
+        <table class="briefing-table" aria-label="従業員数区分別の補助上限額一覧">
+          <thead>
+            <tr>
+              <th>従業員数区分</th>
+              <th>通常時の補助上限額</th>
+              <th>大幅な賃上げを行う場合の上限額</th>
+              <th>1事業者あたりの累計補助上限額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="row-tier-0">
+              <td><strong>0名 〜 5人以下</strong><div class="caption">個人事業主・小規模</div></td>
+              <td class="num">最高 500万円</td>
+              <td class="num">最高 750万円<div class="caption">※通常枠の1.5倍に増額</div></td>
+              <td class="num">最高 1,500万円</td>
+            </tr>
+            <tr id="row-tier-1">
+              <td><strong>6名 〜 20人以下</strong></td>
+              <td class="num">最高 1,000万円</td>
+              <td class="num">1,000万円<div class="caption">※通常枠の上限と同等</div></td>
+              <td class="num">最高 2,000万円</td>
+            </tr>
+            <tr id="row-tier-2">
+              <td><strong>21人以上</strong></td>
+              <td class="num">最高 1,500万円</td>
+              <td class="num">1,500万円<div class="caption">※通常枠の上限と同等</div></td>
+              <td class="num">最高 3,000万円</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 04: DEC 3 RULE CHANGE COMPARISON & CHECKER -->
+    <section id="sec-dec3" class="reveal-section">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">04 / RULE CHANGE</span>
+          <span class="dossier-meta">11月10日発表 // 12月3日からの制度変更点</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">12月3日ルール変更：大幅賃上げ枠は「交付決定翌月 vs 実績報告直近月」の+3%判定へ</h2>
+      <p class="standfirst">通常枠での申請者は確認不要。補助上限額を引き上げる目的で「大幅な賃上げ」を選択する事業者のみ、新たな判定基準・タイミングおよび未達成時の減額ペナルティに厳重な管理が求められます。</p>
+
+      <!-- Interactive Comparison Switcher -->
+      <div class="figure-card">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+          <div>
+            <div class="dossier-meta">COMPARISON // 要件比較ビュー</div>
+            <h3 class="sub-title">適用ルール別の要件・判定タイミング比較</h3>
+          </div>
+          <div class="btn-row" role="group" aria-label="比較フォーカス切り替え">
+            <button type="button" id="cmp-btn-all" class="btn btn--secondary is-active" onclick="setCompareFocus('all')">すべて表示</button>
+            <button type="button" id="cmp-btn-after" class="btn btn--secondary" onclick="setCompareFocus('after')">12月3日以降の注意点にフォーカス</button>
+            <button type="button" id="cmp-btn-normal" class="btn btn--secondary" onclick="setCompareFocus('normal')">通常枠との違いを見る</button>
+          </div>
+        </div>
+
+        <div class="data-table-wrap">
+          <table class="briefing-table" aria-label="12月3日ルール変更前後の要件比較表">
+            <thead>
+              <tr>
+                <th>比較項目</th>
+                <th>通常枠の申請者</th>
+                <th>12月3日改定後（大幅な賃上げ枠）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-cmp-row="target">
+                <td><strong>確認の要否</strong></td>
+                <td><span class="chip chip--positive">確認不要</span>（賃上げ加点・増額を使わないため対象外）</td>
+                <td><span class="chip chip--error">確認必須</span>（0〜5人枠で750万円等を目指す場合）</td>
+              </tr>
+              <tr data-cmp-row="metric">
+                <td><strong>1人あたり給与支給総額</strong></td>
+                <td>要件適用なし</td>
+                <td><strong>＋3%以上の増加率</strong>を達成すること（改定後指標）</td>
+              </tr>
+              <tr data-cmp-row="timing">
+                <td><strong>判定タイミング（比較時点）</strong></td>
+                <td>要件適用なし</td>
+                <td><strong>「交付決定を受けた翌月」</strong>の数値と<strong>「実績報告時の直近月」</strong>の数値を比較</td>
+              </tr>
+              <tr data-cmp-row="minwage">
+                <td><strong>事業内最低賃金の引き上げ</strong></td>
+                <td>法定最低賃金の遵守のみ</td>
+                <td>事業内最低賃金を<strong>3%以上増加</strong>（日銀の物価安定目標2%＋1%相当）</td>
+              </tr>
+              <tr data-cmp-row="penalty">
+                <td><strong>未達成時のリスク</strong></td>
+                <td>賃上げ要件による減額なし</td>
+                <td>計画未達成の場合、<strong>交付される補助金額が減額されるペナルティ</strong>あり</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Interactive Wage Requirement Self-Checker -->
+      <div class="figure-card" style="margin-top: var(--space-lg);">
+        <div class="dossier-meta">WAGE CHECKER // 12月3日ルール準拠 セルフ試算</div>
+        <h3 class="sub-title">大幅賃上げ枠の達成判定チェッカー（+3%ライン試算）</h3>
+        <p class="caption" style="margin-bottom: var(--space-md);">「交付決定の翌月」と「実績報告時の直近月」の1人あたり給与支給総額、および事業内最低賃金を入力して達成可否を確認できます。</p>
+
+        <div class="two-col-grid">
+          <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+            <div class="field-group">
+              <label for="wage-base" class="field-label">交付決定を受けた翌月：1人あたり給与支給総額（円）</label>
+              <input type="number" id="wage-base" class="input-control" min="10000" step="1000" value="300000" oninput="updateWageChecker()">
+            </div>
+            <div class="field-group">
+              <label for="wage-target" class="field-label">実績報告時の直近月：1人あたり給与支給総額（円）</label>
+              <input type="number" id="wage-target" class="input-control" min="10000" step="1000" value="310000" oninput="updateWageChecker()">
+            </div>
+            <div class="two-col-grid" style="gap: var(--space-sm);">
+              <div class="field-group">
+                <label for="minwage-base" class="field-label">改定前 事業内最低賃金（時給・円）</label>
+                <input type="number" id="minwage-base" class="input-control" min="500" step="10" value="1100" oninput="updateWageChecker()">
+              </div>
+              <div class="field-group">
+                <label for="minwage-target" class="field-label">改定後 事業内最低賃金（時給・円）</label>
+                <input type="number" id="minwage-target" class="input-control" min="500" step="10" value="1135" oninput="updateWageChecker()">
+              </div>
+            </div>
+          </div>
+
+          <div id="wage-result-panel" class="aside-box" style="border-radius: var(--rounded-lg);">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm);">
+              <span class="dossier-meta">JUDGMENT // 判定サマリー</span>
+              <span id="wage-overall-badge" class="chip chip--positive">達成見込み（+3%以上）</span>
+            </div>
+            <div style="margin-top: var(--space-md); display: flex; flex-direction: column; gap: var(--space-sm);">
+              <div style="display: flex; justify-content: space-between; border-bottom: var(--card-border); padding-bottom: var(--space-xs);">
+                <span>1人あたり給与支給総額の増加率</span>
+                <strong id="wage-rate-out" class="num">+3.33%</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: var(--card-border); padding-bottom: var(--space-xs);">
+                <span>3%達成に必要な最低金額</span>
+                <span id="wage-req-salary" class="num">309,000円</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: var(--card-border); padding-bottom: var(--space-xs);">
+                <span>事業内最低賃金の増加率</span>
+                <strong id="minwage-rate-out" class="num">+3.18%</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>3%達成に必要な最低時給</span>
+                <span id="minwage-req-out" class="num">1,133円</span>
+              </div>
+            </div>
+            <p id="wage-judgment-note" style="font-size: 0.875rem; margin: var(--space-md) 0 0;"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 05: APPLICATION FLOW & STRICT PRE-GRANT BAN -->
+    <section id="sec-flow" class="reveal-section">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">05 / WORKFLOW</span>
+          <span class="dossier-meta">準備から受給・効果報告までの4ステップ</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">交付決定から受給までの4ステップと「事前着手の厳禁」ルール</h2>
+      <p class="standfirst">随時申請・随時発表のため迅速な交付決定が期待できますが、交付決定通知の受領前に発注・契約した案件は一切補助対象外となります。各ステップをクリックして実務手順を確認してください。</p>
+
+      <!-- Interactive 4-Step Flow -->
+      <div class="flow-steps" role="tablist" aria-label="申請プロセス4ステップ">
+        <button type="button" id="step-tab-1" class="flow-step-btn" aria-current="step" onclick="selectFlowStep(1)">
+          <span class="index-num">STEP 01</span>
+          <span class="flow-step-label">事前準備<br>（gBizIDプライム）</span>
+        </button>
+        <button type="button" id="step-tab-2" class="flow-step-btn" onclick="selectFlowStep(2)">
+          <span class="index-num">STEP 02</span>
+          <span class="flow-step-label">製品・登録販売<br>事業者の選定</span>
+        </button>
+        <button type="button" id="step-tab-3" class="flow-step-btn" onclick="selectFlowStep(3)">
+          <span class="index-num">STEP 03</span>
+          <span class="flow-step-label">販売事業者との<br>共同申請</span>
+        </button>
+        <button type="button" id="step-tab-4" class="flow-step-btn" onclick="selectFlowStep(4)">
+          <span class="index-num">STEP 04</span>
+          <span class="flow-step-label">交付決定後の発注<br>納品・効果報告</span>
+        </button>
+      </div>
+
+      <div class="split-grid">
+        <article class="figure-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm);">
+            <span id="flow-detail-num" class="dossier-meta">STEP 01 // 事前準備</span>
+            <span id="flow-detail-tag" class="chip chip--secondary">申請前の必須準備</span>
+          </div>
+          <h3 id="flow-detail-title" class="sub-title" style="margin-top: var(--space-sm);">gBizIDプライムアカウントの取得</h3>
+          <p id="flow-detail-body" class="prose">
+            本補助金の申請には「gBizIDプライムアカウント」が必須です。アカウントがない場合は申請手続きに入れないため、未取得の事業者は最優先で取得手続きを開始してください。
+          </p>
+          <div class="aside-box" style="margin-top: var(--space-md);">
+            <div class="dossier-meta">ACTION POINT // 実務上の注意点</div>
+            <p id="flow-detail-tip" style="margin: var(--space-xs) 0 0; font-size: 0.9375rem;"></p>
+          </div>
+          <div class="btn-row" style="margin-top: var(--space-md);">
+            <button type="button" class="btn btn--secondary" onclick="stepFlowPrev()">前のステップ</button>
+            <button type="button" class="btn" onclick="stepFlowNext()">次のステップへ</button>
+          </div>
+        </article>
+
+        <!-- Pre-Grant Ordering Trap Simulator -->
+        <article class="figure-card">
+          <div class="dossier-meta">CRITICAL BOUNDARY // 発注タイミングの検証</div>
+          <h3 class="sub-title" style="margin-top: var(--space-xs);">「事前着手」の可否シミュレーション</h3>
+          <p class="caption" style="margin-bottom: var(--space-md);">発注・契約のタイミングによって補助対象になるかが決まります。</p>
+
+          <div class="btn-row" role="group" aria-label="発注タイミング選択">
+            <button type="button" id="order-btn-before" class="btn btn--secondary" aria-pressed="false" onclick="setOrderTiming('before')">交付決定通知の「前」に発注・契約</button>
+            <button type="button" id="order-btn-after" class="btn btn--secondary is-active" aria-pressed="true" onclick="setOrderTiming('after')">交付決定通知の「後」に発注・契約</button>
+          </div>
+
+          <div id="order-banner" class="boundary-banner boundary-banner--ok">
+            <div style="display: flex; align-items: center; gap: var(--space-xs); font-weight: 700;">
+              <i data-lucide="check-circle-2" class="inline-icon" aria-hidden="true"></i>
+              <span id="order-status-title">補助対象（適正な手続き）</span>
+            </div>
+            <p id="order-status-desc" style="margin: var(--space-xs) 0 0; font-size: 0.9375rem;">
+              事務局から「交付決定通知」を受領した後に、発注・契約・納品・支払いを行うことで補助対象となります。完了後は実績報告および効果報告を実施します。
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Persistent Readiness Checklist -->
+      <div class="figure-card" style="margin-top: var(--space-lg);">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+          <div>
+            <div class="dossier-meta">READINESS CHECKLIST // 申請準備チェックリスト（自動保存対応）</div>
+            <h3 class="sub-title">申請前の確認事項（<span id="check-progress-text" class="num">0 / 5 完了</span>）</h3>
+          </div>
+          <button type="button" id="btn-reset-checklist" class="btn btn--secondary" onclick="handleResetChecklist(this)">チェックをリセット</button>
+        </div>
+
+        <div id="checklist-container" style="display: flex; flex-direction: column; gap: var(--space-sm);">
+          <label class="checklist-item">
+            <input type="checkbox" data-check-id="gbiz" onchange="toggleChecklistItem('gbiz', this.checked)">
+            <div>
+              <strong class="checklist-title">gBizIDプライムアカウントを取得済み（または申請済み）</strong>
+              <div class="caption">アカウント未取得では申請画面に入れません。</div>
+            </div>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" data-check-id="scope" onchange="toggleChecklistItem('scope', this.checked)">
+            <div>
+              <strong class="checklist-title">導入目的が「既存事業の省力化」であることを確認した</strong>
+              <div class="caption">新規事業の立ち上げ・創業・新分野展開は本補助金の対象外です。</div>
+            </div>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" data-check-id="vendor" onchange="toggleChecklistItem('vendor', this.checked)">
+            <div>
+              <strong class="checklist-title">公式カタログから導入製品と「登録販売事業者」を選定した</strong>
+              <div class="caption">登録販売事業者との共同申請が必須です。</div>
+            </div>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" data-check-id="wage" onchange="toggleChecklistItem('wage', this.checked)">
+            <div>
+              <strong class="checklist-title">「大幅な賃上げ枠」を使う場合、12月3日改定後の+3%要件と減額リスクを確認した</strong>
+              <div class="caption">交付決定翌月と実績報告直近月の比較、および事業内最低賃金+3%が必要です。</div>
+            </div>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" data-check-id="nobefore" onchange="toggleChecklistItem('nobefore', this.checked)">
+            <div>
+              <strong class="checklist-title">交付決定通知を受領するまで「発注・契約を行わない」ことを社内で共有した</strong>
+              <div class="caption">事前着手は厳禁であり、通知前の契約は補助対象外となります。</div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 06: ADOPTED EQUIPMENT CATALOG EXAMPLES -->
+    <section id="sec-catalog" class="reveal-section">
+      <div class="dossier-bar">
+        <div class="dossier-bar-left">
+          <span class="dossier-pill">06 / ADOPTED PRODUCTS</span>
+          <span class="dossier-meta">カタログ登録・実際の採択製品例</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">実際に採択されている代表的な省力化製品</h2>
+      <p class="standfirst">清掃・接客の省人化機器から、建設・製造・測量向けの高度な自動化設備まで幅広い製品が採択されています。業種別に代表的な導入事例を絞り込んで確認できます。</p>
+
+      <div class="btn-row" role="group" aria-label="業種別フィルター" style="margin-bottom: var(--space-md);">
+        <button type="button" class="btn btn--secondary is-active" onclick="filterProducts('all', this)">すべて表示（12製品）</button>
+        <button type="button" class="btn btn--secondary" onclick="filterProducts('建設・測量', this)">建設業・測量</button>
+        <button type="button" class="btn btn--secondary" onclick="filterProducts('製造', this)">製造業</button>
+        <button type="button" class="btn btn--secondary" onclick="filterProducts('飲食・小売', this)">飲食・小売・サービス</button>
+      </div>
+
+      <div id="product-grid" class="card-grid"></div>
+
+      <!-- General Type Note & Methodology -->
+      <div class="aside-box" style="margin-top: var(--space-xl);">
+        <div class="dossier-meta">COMPLEMENTARY NOTE // 一般型および最新セミナー・情報出典</div>
+        <p class="prose" style="margin-top: var(--space-xs); margin-bottom: var(--space-sm);">
+          カタログに該当製品がない場合やカスタマイズ導入を検討する場合は、<strong>「一般型」（12月下旬締め切り予定で募集）</strong>も併せて確認することが推奨されます。
+        </p>
+        <details class="method-drawer">
+          <summary>出典・分析データの前提条件を見る</summary>
+          <ul style="margin: var(--space-sm) 0 0; padding-left: 1.25rem; font-size: 0.875rem; color: var(--on-surface-variant);">
+            <li><strong>動画解説ソース：</strong>牧野谷 輝 氏（中小企業診断士・行政書士）「省力化投資補助金（カタログ注文型）最新情報」（2026年11月公表データ解説）。</li>
+            <li><strong>詳細分析レポート：</strong>11月10日の事務局発表（12月3日ルール変更）および11月13日時点公表データに基づく制度構造・採択実態整理。</li>
+            <li><strong>推計採択率（約95%）：</strong>公式発表値ではなく、公表データから審査中件数を差し引いた分析（X上の丸総研氏の推計および過去採択実績からの読み取り）に基づきます。</li>
+            <li><strong>公募計画と基金シート：</strong>令和6年1月事務局公募情報（2026年9月まで約15回・12万件予定）および令和5年度基金シート（令和6年度単年度42,000件・3年間12万件目標）を参照。</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <api-shim></api-shim>
+  <script>
+    /* State object persisted via notebookAppApi */
+    var appState = {
+      employees: 3,
+      wageHike: false,
+      appsCount: 1,
+      flowStep: 1,
+      orderTiming: 'after',
+      checklist: {
+        gbiz: false,
+        scope: false,
+        vendor: false,
+        wage: false,
+        nobefore: false
+      }
+    };
+
+    var PRODUCTS = [
+      { name: `清掃ロボット`, cat: `飲食・小売`, desc: `店舗・施設・バックヤードの床清掃を自動化し、閉店後や日中の清掃作業時間を削減。` },
+      { name: `券売機`, cat: `飲食・小売`, desc: `飲食サービス業・小売業での注文・会計業務をセルフ化し、レジ対応の負担を軽減。` },
+      { name: `オートラベラー`, cat: `飲食・小売`, desc: `商品・梱包へのラベル貼付作業を自動化し、出荷・店頭陳列準備の省力化を実現。` },
+      { name: `スチームコンベクションオーブン`, cat: `飲食・小売`, desc: `飲食サービス業における調理工程の自動化・均一化により、厨房の少人数運用を支援。` },
+      { name: `マシニングセンター`, cat: `製造`, desc: `製造業における多工程の切削加工を1台に集約し、段取り替えと加工工数を大幅削減。` },
+      { name: `単圧板金加工用取り装置`, cat: `製造`, desc: `板金加工工程でのワーク着脱・取り出しを自動化し、プレス・板金作業の省人化を推進。` },
+      { name: `CNC 3次元測定機`, cat: `製造`, desc: `精密部品の検査・計測作業を自動プログラム化し、熟練検査員の作業時間を短縮。` },
+      { name: `食品包装機・調合機`, cat: `製造`, desc: `食品製造現場の計量・調合・包装プロセスを機械化し、手作業によるボトルネックを解消。` },
+      { name: `産業用枚葉デジタル印刷機`, cat: `製造`, desc: `製版工程の省略と自動化により、多品種小ロット印刷の段取り・オペレーションを省力化。` },
+      { name: `測量器`, cat: `建設・測量`, desc: `建設業・専門技術サービス業における現場測量・位置出し作業の人数と所要時間を圧縮。` },
+      { name: `地上型3Dレーザースキャナー`, cat: `建設・測量`, desc: `広域の3次元点群データを短時間で取得し、図面作成・現況調査の手間を大幅削減。` },
+      { name: `マシンコントロール／マシンガイダンス機能付きショベル`, cat: `建設・測量`, desc: `ICT建機による施工精度向上と丁張り作業削減により、建設現場の重機作業を省力化。` }
+    ];
+
+    var FLOW_DETAILS = {
+      1: {
+        num: `STEP 01 // 事前準備`,
+        tag: `申請前の必須準備`,
+        title: `gBizIDプライムアカウントの取得`,
+        body: `省力化投資補助金の電子申請には「gBizIDプライムアカウント」が必須です。アカウントを取得していない事業者は申請画面に入ることができないため、まず最初に取得手続きを行ってください。`,
+        tip: `取得には審査や書類送付等の日数がかかる場合があるため、製品選定と並行して、あるいは最優先で早めに申請しておくことが推奨されます。`
+      },
+      2: {
+        num: `STEP 02 // カタログとパートナー選定`,
+        tag: `共同申請パートナー探し`,
+        title: `カタログ製品の検索と「登録販売事業者」の選定`,
+        body: `事務局公式サイトのカタログから自社で導入したい省力化製品を探します。あわせて、その製品を取り扱っている「登録販売事業者」を探すことが必要です。`,
+        tip: `全208カテゴリーのうち42件は製品未登録であり、かつ販売事業者との共同申請が必須です。希望製品を取り扱う登録販売事業者が対応可能か早めに確認してください。`
+      },
+      3: {
+        num: `STEP 03 // 共同申請`,
+        tag: `随時申請・随時発表`,
+        title: `登録販売事業者との共同申請`,
+        body: `選定した登録販売事業者と共同で補助金の交付申請を行います。従来の公募回ごとの締め切りとは異なり、随時申請受付・随時発表方式が採用されています。`,
+        tip: `大幅な賃上げ枠（12月3日以降のルール変更対象）を利用する場合は、給与支給総額+3%・事業内最低賃金+3%の達成計画をあらかじめ精査した上で申請します。`
+      },
+      4: {
+        num: `STEP 04 // 交付決定後の実行と報告`,
+        tag: `事前着手厳禁`,
+        title: `交付決定通知後の発注・契約・納品・支払いと効果報告`,
+        body: `事務局から「交付決定通知」を受領した後に、発注・契約・納品・支払いを実施します。事業完了後は実績報告およびその後の効果報告を行います。`,
+        tip: `交付決定前に発注・契約を行う「事前着手」は一切認められません。また大幅賃上げ枠では「交付決定の翌月」と「実績報告時の直近月」の給与支給総額が比較判定されます。`
+      }
+    };
+
+    function getCssToken(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function scrollToSection(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    /* Simulator Logic */
+    function syncEmpFromSlider(val) {
+      var num = parseInt(val, 10);
+      if (isNaN(num) || num < 0) num = 0;
+      var numInput = document.getElementById('sim-emp-number');
+      if (numInput) numInput.value = num;
+      appState.employees = num;
+      updateSimulator();
+      saveState();
+    }
+
+    function syncEmpFromNumber(val) {
+      var num = parseInt(val, 10);
+      if (isNaN(num) || num < 0) num = 0;
+      if (num > 999) num = 999;
+      var slider = document.getElementById('sim-emp-slider');
+      if (slider) slider.value = Math.min(num, 50);
+      appState.employees = num;
+      updateSimulator();
+      saveState();
+    }
+
+    function setWageMode(isWage) {
+      appState.wageHike = !!isWage;
+      updateSimulator();
+      saveState();
+    }
+
+    function setSimAppsCount(val) {
+      var count = parseInt(val, 10) || 1;
+      appState.appsCount = count;
+      updateSimulator();
+      saveState();
+    }
+
+    function applySimPreset(emp, wage) {
+      appState.employees = emp;
+      appState.wageHike = !!wage;
+      var slider = document.getElementById('sim-emp-slider');
+      var numInput = document.getElementById('sim-emp-number');
+      if (slider) slider.value = Math.min(emp, 50);
+      if (numInput) numInput.value = emp;
+      updateSimulator();
+      saveState();
+    }
+
+    function updateSimulator() {
+      var emp = appState.employees;
+      var isWage = appState.wageHike;
+      var apps = appState.appsCount || 1;
+
+      var tierIndex = 0;
+      var tierLabel = `従業員 0〜5人以下区分`;
+      var normalCap = 500;
+      var wageCap = 750;
+      var cumCap = 1500;
+
+      if (emp >= 6 && emp <= 20) {
+        tierIndex = 1;
+        tierLabel = `従業員 6〜20人以下区分`;
+        normalCap = 1000;
+        wageCap = 1000;
+        cumCap = 2000;
+      } else if (emp >= 21) {
+        tierIndex = 2;
+        tierLabel = `従業員 21人以上区分`;
+        normalCap = 1500;
+        wageCap = 1500;
+        cumCap = 3000;
+      }
+
+      var activeSingleCap = isWage ? wageCap : normalCap;
+      var potentialTotal = Math.min(activeSingleCap * apps, cumCap);
+      var fillPct = Math.round((potentialTotal / cumCap) * 100);
+
+      var btnNormal = document.getElementById('btn-mode-normal');
+      var btnWage = document.getElementById('btn-mode-wage');
+      if (btnNormal) btnNormal.setAttribute('aria-pressed', isWage ? 'false' : 'true');
+      if (btnWage) btnWage.setAttribute('aria-pressed', isWage ? 'true' : 'false');
+
+      var tierBadge = document.getElementById('sim-tier-badge');
+      if (tierBadge) tierBadge.textContent = tierLabel + `（入力: ` + emp + `名）`;
+
+      var singleCapEl = document.getElementById('sim-single-cap');
+      if (singleCapEl) singleCapEl.textContent = `最高 ` + activeSingleCap.toLocaleString() + `万円`;
+
+      var wageNoteEl = document.getElementById('sim-wage-note');
+      if (wageNoteEl) {
+        if (isWage && tierIndex === 0) {
+          wageNoteEl.textContent = `大幅賃上げの適用により、通常枠（500万円）から1.5倍の750万円へ増額されます。`;
+        } else if (isWage && tierIndex > 0) {
+          wageNoteEl.textContent = `6人以上の区分では、大幅賃上げを行う場合の単回上限も通常枠と同等（` + normalCap.toLocaleString() + `万円）となります。`;
+        } else {
+          wageNoteEl.textContent = `通常枠の単回上限です（3月改定により従来の2倍水準へ引き上げ）。`;
+        }
+      }
+
+      var cumCapEl = document.getElementById('sim-cum-cap');
+      if (cumCapEl) cumCapEl.textContent = `最高 ` + cumCap.toLocaleString() + `万円`;
+
+      var meterEl = document.getElementById('sim-meter-fill');
+      if (meterEl) {
+        meterEl.style.width = fillPct + `%`;
+        if (isWage && tierIndex === 0) {
+          meterEl.classList.add('cap-meter-fill--boost');
+        } else {
+          meterEl.classList.remove('cap-meter-fill--boost');
+        }
+      }
+
+      var multiEl = document.getElementById('sim-multi-summary');
+      if (multiEl) {
+        multiEl.textContent = apps + `回の上限活用で最大 ` + potentialTotal.toLocaleString() + `万円まで申請可能（累計上限 ` + cumCap.toLocaleString() + `万円の ` + fillPct + `%）。`;
+      }
+
+      var dec3Text = document.getElementById('sim-dec3-text');
+      if (dec3Text) {
+        if (isWage) {
+          dec3Text.innerHTML = `<strong>12月3日以降のルール変更対象：</strong>「交付決定を受けた翌月」と「実績報告時の直近月」を比較し、1人あたり給与支給総額+3%以上および事業内最低賃金+3%以上の達成が必要です。未達成時は補助金額が減額されます。`;
+        } else {
+          dec3Text.innerHTML = `<strong>通常枠の適用：</strong>12月3日からの大幅賃上げ要件変更の確認は<strong>不要</strong>です。通常どおり事前着手を避け、交付決定後に発注・導入を進めます。`;
+        }
+      }
+
+      var selectApps = document.getElementById('sim-apps-count');
+      if (selectApps) selectApps.value = String(apps);
+
+      for (var i = 0; i < 3; i++) {
+        var row = document.getElementById('row-tier-' + i);
+        if (row) {
+          if (i === tierIndex) {
+            row.classList.add('is-highlighted');
+          } else {
+            row.classList.remove('is-highlighted');
+          }
+        }
+      }
+    }
+
+    /* Dec 3 Comparison Focus */
+    function setCompareFocus(mode) {
+      var btns = {
+        all: document.getElementById('cmp-btn-all'),
+        after: document.getElementById('cmp-btn-after'),
+        normal: document.getElementById('cmp-btn-normal')
+      };
+      Object.keys(btns).forEach(function (k) {
+        if (btns[k]) {
+          if (k === mode) btns[k].classList.add('is-active');
+          else btns[k].classList.remove('is-active');
+        }
+      });
+
+      var rows = document.querySelectorAll('[data-cmp-row]');
+      rows.forEach(function (row) {
+        var key = row.getAttribute('data-cmp-row');
+        row.classList.remove('is-highlighted');
+        if (mode === 'after' && (key === 'metric' || key === 'timing' || key === 'penalty')) {
+          row.classList.add('is-highlighted');
+        } else if (mode === 'normal' && key === 'target') {
+          row.classList.add('is-highlighted');
+        }
+      });
+    }
+
+    /* Wage Checker */
+    function updateWageChecker() {
+      var baseEl = document.getElementById('wage-base');
+      var targetEl = document.getElementById('wage-target');
+      var minBaseEl = document.getElementById('minwage-base');
+      var minTargetEl = document.getElementById('minwage-target');
+      if (!baseEl || !targetEl || !minBaseEl || !minTargetEl) return;
+
+      var base = parseFloat(baseEl.value) || 0;
+      var target = parseFloat(targetEl.value) || 0;
+      var minBase = parseFloat(minBaseEl.value) || 0;
+      var minTarget = parseFloat(minTargetEl.value) || 0;
+
+      var wagePct = base > 0 ? ((target - base) / base) * 100 : 0;
+      var minWagePct = minBase > 0 ? ((minTarget - minBase) / minBase) * 100 : 0;
+
+      var reqSalary = Math.ceil(base * 1.03);
+      var reqMinWage = Math.ceil(minBase * 1.03);
+
+      var wageRateOut = document.getElementById('wage-rate-out');
+      var wageReqOut = document.getElementById('wage-req-salary');
+      var minRateOut = document.getElementById('minwage-rate-out');
+      var minReqOut = document.getElementById('minwage-req-out');
+      var badge = document.getElementById('wage-overall-badge');
+      var note = document.getElementById('wage-judgment-note');
+
+      if (wageRateOut) wageRateOut.textContent = (wagePct >= 0 ? `+` : ``) + wagePct.toFixed(2) + `%`;
+      if (wageReqOut) wageReqOut.textContent = reqSalary.toLocaleString() + `円`;
+      if (minRateOut) minRateOut.textContent = (minWagePct >= 0 ? `+` : ``) + minWagePct.toFixed(2) + `%`;
+      if (minReqOut) minReqOut.textContent = reqMinWage.toLocaleString() + `円`;
+
+      var passSalary = wagePct >= 3.0;
+      var passMin = minWagePct >= 3.0;
+
+      if (badge && note) {
+        if (passSalary && passMin) {
+          badge.className = `chip chip--positive`;
+          badge.textContent = `達成見込み（+3%以上）`;
+          note.textContent = `給与支給総額・事業内最低賃金ともに+3%以上の基準を満たしています。交付決定翌月と実績報告直近月の実数値を計画どおり管理してください。`;
+        } else {
+          badge.className = `chip chip--error`;
+          badge.textContent = `未達成リスク（減額対象）`;
+          var lack = [];
+          if (!passSalary) lack.push(`1人あたり給与支給総額（目標: ` + reqSalary.toLocaleString() + `円以上）`);
+          if (!passMin) lack.push(`事業内最低賃金（目標: ` + reqMinWage.toLocaleString() + `円以上）`);
+          note.textContent = lack.join(` および `) + ` が+3%に達していません。計画未達成の場合は補助金が減額されるペナルティが科されます。`;
+        }
+      }
+    }
+
+    /* Flow Stepper */
+    function selectFlowStep(step) {
+      appState.flowStep = step;
+      for (var i = 1; i <= 4; i++) {
+        var tab = document.getElementById('step-tab-' + i);
+        if (tab) {
+          if (i === step) tab.setAttribute('aria-current', 'step');
+          else tab.removeAttribute('aria-current');
+        }
+      }
+      var data = FLOW_DETAILS[step];
+      if (data) {
+        var numEl = document.getElementById('flow-detail-num');
+        var tagEl = document.getElementById('flow-detail-tag');
+        var titleEl = document.getElementById('flow-detail-title');
+        var bodyEl = document.getElementById('flow-detail-body');
+        var tipEl = document.getElementById('flow-detail-tip');
+        if (numEl) numEl.textContent = data.num;
+        if (tagEl) tagEl.textContent = data.tag;
+        if (titleEl) titleEl.textContent = data.title;
+        if (bodyEl) bodyEl.textContent = data.body;
+        if (tipEl) tipEl.textContent = data.tip;
+      }
+      saveState();
+    }
+
+    function stepFlowPrev() {
+      var prev = appState.flowStep > 1 ? appState.flowStep - 1 : 4;
+      selectFlowStep(prev);
+    }
+
+    function stepFlowNext() {
+      var next = appState.flowStep < 4 ? appState.flowStep + 1 : 1;
+      selectFlowStep(next);
+    }
+
+    /* Order Timing Trap */
+    function setOrderTiming(mode) {
+      appState.orderTiming = mode;
+      var btnBefore = document.getElementById('order-btn-before');
+      var btnAfter = document.getElementById('order-btn-after');
+      var banner = document.getElementById('order-banner');
+      var title = document.getElementById('order-status-title');
+      var desc = document.getElementById('order-status-desc');
+
+      if (btnBefore && btnAfter) {
+        var isBefore = mode === 'before';
+        btnBefore.setAttribute('aria-pressed', isBefore ? 'true' : 'false');
+        btnAfter.setAttribute('aria-pressed', isBefore ? 'false' : 'true');
+        if (isBefore) {
+          btnBefore.classList.add('is-active');
+          btnAfter.classList.remove('is-active');
+        } else {
+          btnAfter.classList.add('is-active');
+          btnBefore.classList.remove('is-active');
+        }
+      }
+
+      if (banner && title && desc) {
+        if (mode === 'before') {
+          banner.className = `boundary-banner`;
+          title.textContent = `補助対象外（事前着手により不適合）`;
+          desc.textContent = `交付決定を受ける前に発注や契約を行った案件は、補助金の対象外となります。急ぎの導入であっても、必ず交付決定通知の受領後に契約手続きを開始してください。`;
+        } else {
+          banner.className = `boundary-banner boundary-banner--ok`;
+          title.textContent = `補助対象（適正な手続き）`;
+          desc.textContent = `事務局から「交付決定通知」を受領した後に、発注・契約・納品・支払いを行うことで補助対象となります。完了後は実績報告および効果報告を実施します。`;
+        }
+      }
+      saveState();
+    }
+
+    /* Checklist Persistence */
+    function toggleChecklistItem(id, checked) {
+      appState.checklist[id] = !!checked;
+      renderChecklist();
+      saveState();
+    }
+
+    function renderChecklist() {
+      var keys = Object.keys(appState.checklist);
+      var doneCount = 0;
+      keys.forEach(function (k) {
+        var box = document.querySelector('input[data-check-id="' + k + '"]');
+        if (box) {
+          var isChecked = !!appState.checklist[k];
+          box.checked = isChecked;
+          var label = box.closest('.checklist-item');
+          if (label) {
+            if (isChecked) label.classList.add('is-done');
+            else label.classList.remove('is-done');
+          }
+          if (isChecked) doneCount++;
+        }
+      });
+      var progEl = document.getElementById('check-progress-text');
+      if (progEl) progEl.textContent = doneCount + ` / ` + keys.length + ` 完了`;
+    }
+
+    function handleResetChecklist(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== 'true') {
+        btn.dataset.armed = 'true';
+        btn.textContent = `もう一度押してリセット確定`;
+        return;
+      }
+      btn.dataset.armed = 'false';
+      btn.textContent = `チェックをリセット`;
+      Object.keys(appState.checklist).forEach(function (k) {
+        appState.checklist[k] = false;
+      });
+      renderChecklist();
+      saveState();
+    }
+
+    /* Product Filter */
+    function filterProducts(cat, clickedBtn) {
+      var grid = document.getElementById('product-grid');
+      if (!grid) return;
+
+      if (clickedBtn) {
+        var siblings = clickedBtn.parentElement ? clickedBtn.parentElement.querySelectorAll('button') : [];
+        siblings.forEach(function (b) { b.classList.remove('is-active'); });
+        clickedBtn.classList.add('is-active');
+      }
+
+      var filtered = cat === 'all' ? PRODUCTS : PRODUCTS.filter(function (p) { return p.cat === cat; });
+      grid.innerHTML = '';
+      filtered.forEach(function (item, idx) {
+        var card = document.createElement('article');
+        card.className = 'figure-card';
+        var numStr = idx + 1 < 10 ? '0' + (idx + 1) : String(idx + 1);
+        card.innerHTML =
+          `<div style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-xs);">` +
+          `<span class="index-num">` + numStr + `</span>` +
+          `<span class="chip chip--secondary">` + item.cat + `</span>` +
+          `</div>` +
+          `<h3 class="sub-title" style="margin-top:var(--space-sm);">` + item.name + `</h3>` +
+          `<p class="caption" style="margin-top:var(--space-xs);font-size:0.875rem;line-height:1.55;">` + item.desc + `</p>`;
+        grid.appendChild(card);
+      });
+    }
+
+    /* Charts */
+    function initCharts() {
+      if (typeof Chart === 'undefined') return;
+      var c1 = getCssToken('--data-1');
+      var c2 = getCssToken('--data-2');
+      var cCtx = getCssToken('--data-context');
+      var ink = getCssToken('--on-surface');
+      var inkMuted = getCssToken('--on-surface-variant');
+      var fontBody = getCssToken('--font-body');
+
+      Chart.defaults.font.family = fontBody;
+      Chart.defaults.color = inkMuted;
+
+      var ctxGap = document.getElementById('chart-target-gap');
+      if (ctxGap) {
+        new Chart(ctxGap, {
+          type: 'bar',
+          data: {
+            labels: [`3年間 採択予定数（〜2026年9月）`, `単年度目標（令和6年度）`, `10月末時点 採択実績`],
+            datasets: [{
+              label: `件数`,
+              data: [120000, 42000, 6980],
+              backgroundColor: [cCtx, c1, c2],
+              borderRadius: 4,
+              barThickness: 28
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function (ctx) {
+                    return ctx.parsed.x.toLocaleString() + ` 件`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                beginAtZero: true,
+                grid: { color: cCtx },
+                ticks: {
+                  callback: function (val) {
+                    return (val / 10000) + `万件`;
+                  }
+                }
+              },
+              y: {
+                grid: { display: false },
+                ticks: { color: ink, font: { weight: '600' } }
+              }
+            }
+          }
+        });
+      }
+
+      var ctxScale = document.getElementById('chart-scale-dist');
+      if (ctxScale) {
+        new Chart(ctxScale, {
+          type: 'bar',
+          data: {
+            labels: [`従業員5人以下`, `従業員10人以下（累計）`, `従業員20人以下（累計）`, `従業員21人以上`],
+            datasets: [{
+              label: `採択シェア（%）`,
+              data: [17.9, 30, 50, 50],
+              backgroundColor: [c2, c1, c1, cCtx],
+              borderRadius: 4,
+              barThickness: 32
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function (ctx) {
+                    return `約 ` + ctx.parsed.y + `%`;
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 60,
+                ticks: {
+                  callback: function (val) { return val + `%`; }
+                }
+              },
+              x: {
+                grid: { display: false },
+                ticks: { color: ink }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    /* State Persistence via notebookAppApi */
+    async function saveState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+        try {
+          await window.notebookAppApi.setAppState(appState);
+        } catch (e) {
+          /* Ignore transient host save error */
+        }
+      }
+    }
+
+    async function loadState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+        try {
+          var saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            if (typeof saved.employees === 'number') appState.employees = saved.employees;
+            if (typeof saved.wageHike === 'boolean') appState.wageHike = saved.wageHike;
+            if (typeof saved.appsCount === 'number') appState.appsCount = saved.appsCount;
+            if (typeof saved.flowStep === 'number') appState.flowStep = saved.flowStep;
+            if (typeof saved.orderTiming === 'string') appState.orderTiming = saved.orderTiming;
+            if (saved.checklist && typeof saved.checklist === 'object') {
+              Object.keys(appState.checklist).forEach(function (k) {
+                if (typeof saved.checklist[k] === 'boolean') {
+                  appState.checklist[k] = saved.checklist[k];
+                }
+              });
+            }
+          }
+        } catch (e) {
+          /* Fallback to default initial state */
+        }
+      }
+    }
+
+    async function initApp() {
+      await loadState();
+
+      var slider = document.getElementById('sim-emp-slider');
+      var numInput = document.getElementById('sim-emp-number');
+      if (slider) slider.value = Math.min(appState.employees, 50);
+      if (numInput) numInput.value = appState.employees;
+
+      updateSimulator();
+      updateWageChecker();
+      selectFlowStep(appState.flowStep || 1);
+      setOrderTiming(appState.orderTiming || 'after');
+      renderChecklist();
+      filterProducts('all', null);
+      initCharts();
+
+      if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
